@@ -1,0 +1,53 @@
+{
+    "controlCabinet": {
+        "entity_name": "MURCIA-CE-",
+        "schedule": "*/5 * * * *",
+        "staticAttributes": {
+            "dateMeteringStarted": "2020-01-14T08:00:00",
+            "dateServiceStarted": "2018-01-14",
+            "maximumPowerAvailable": 20
+        },
+        "entities": [
+            {% for key, value in cabinets.iterrows() %}
+            {
+                "address": "{{ key }}, Murcia, Murcia",
+                "location": {
+                    "coordinates": [
+                        {{value['WKT_X']}},
+                        {{value['WKT_Y']}}
+                    ],
+                    "type": "Point"
+                },
+                "refStreetlightGroup": "streetlightgroup:Murcia:G{{value['group']}}"
+            }
+            {{"," if not loop.last}}
+            {% endfor %}
+        ]
+    },
+    "streetlight": {
+        "entity_name": "MURCIA-FA-",
+        "schedule": "*/15 * * * *",
+        "staticAttributes": {
+            "dateMeteringStarted": "2020-01-14T08:00:00",
+            "dateServiceStarted": "2018-01-14",
+            "illuminanceLevelPercentage": "50"
+        },
+        "entities": [
+            {% for key, value in streetlights.iterrows() %}
+            {
+                "address": "{{value['calles_cal']}}, Murcia, Murcia",
+                "location": {
+                    "coordinates": [
+                        {{value['WKT_X']}},
+                        {{value['WKT_Y']}}
+                    ],
+                    "type": "Point"
+                },
+                "refStreetlightControlCabinet": "MURCIA-CE-{{value['group']}}",
+                "refStreetlightGroup": "streetlightgroup:Murcia:G{{value['group']}}"
+            }
+            {{"," if not loop.last}}
+            {% endfor %}
+        ]
+    }
+}
