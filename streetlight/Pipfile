@@ -13,6 +13,7 @@ aiohttp = "*"
 asyncio = "*"
 pandas = "*"
 jinja2 = "*"
+click = "*"
 
 [requires]
 python_version = "3.8"
