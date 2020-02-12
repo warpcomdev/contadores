@@ -10,7 +10,7 @@
         "entities": [
             {% for key, value in cabinets.iterrows() %}
             {
-                "address": "{{ key }}, Murcia, Murcia",
+                "address": "{{value['detalle_di']}}, Murcia, Murcia",
                 "location": {
                     "coordinates": [
                         {{value['WKT_X']}},
@@ -18,7 +18,9 @@
                     ],
                     "type": "Point"
                 },
+                {% if value['p_contrata'] %}
                 "maximumPowerAvailable": {{value['p_contrata']}},
+                {% endif %}
                 "refStreetlightGroup": "streetlightgroup:Murcia:G{{value['group']}}"
             }
             {{"," if not loop.last}}

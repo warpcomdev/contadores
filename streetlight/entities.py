@@ -71,8 +71,9 @@ async def read_lights(csvpuntosluz: str,
     # Filter out cabinets not referenced by streetligths
     referenced = streetlights.groupby('id_centro').agg({'lamparas_p': sum})
     cabinets = cabinets.join(referenced, how='inner')
-    # Assign lights and group IDs
+    # Assign group IDs to cabinets and set power to 0 if NaN
     cabinets = cabinets.assign(group=group(len(cabinets)))
+    cabinets = cabinets.fillna({'p_contrata': 0})
     # Join cabinets to streetlights, so we get group ID
     streetlights = streetlights.join(cabinets,
                                      on='id_centro',
