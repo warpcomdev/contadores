@@ -18,9 +18,8 @@
                     ],
                     "type": "Point"
                 },
-                {% if value['p_contrata'] %}
                 "maximumPowerAvailable": {{value['p_contrata']}},
-                {% endif %}
+                "energyConsumed": {{value['lamparas_p']}},
                 "refStreetlightGroup": "streetlightgroup:Murcia:G{{value['group']}}"
             }
             {{"," if not loop.last}}
